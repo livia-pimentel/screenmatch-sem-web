@@ -7,8 +7,10 @@ import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     // Atributos
@@ -46,6 +48,27 @@ public class Main {
 //        }
 
         // Outra forma de fazer um for dentro do outro
+        // Lambda
         temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+
+//        // Streams
+//        // Fluxo de dados
+//        List<String> nomes = Arrays.asList("Jacque", "Iasmin", "Paulo", "Nico", "Rodrigo");
+//        // Fluxo de operações encadeadas
+//        nomes.stream()
+//                .sorted()
+//                .limit(3)
+//                .filter(n -> n.startsWith("N"))
+//                .map(n -> n.toUpperCase())
+//                .forEach(System.out::println);
+
+        // Pegando os melhores episodios
+        List<DadosEpisodio> dadosEpisodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toList());
+//                .toList(); // Lista imutavel
+
+
+
     }
 }
