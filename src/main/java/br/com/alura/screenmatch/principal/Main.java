@@ -123,12 +123,21 @@ public class Main {
 //                                "Data Lançamento: " + e.getDataLancamento().format(formatador)
 //                ));
 
-        // Agrupamento de dados - usando map
+        // Agrupamento de dados - usando map para média por temporada
         Map<Integer, Double> avaliacaoPorTemporada = episodios.stream()
                 .filter(e -> e.getAvaliacao() > 0.0)
                 .collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getAvaliacao)));
         System.out.println(avaliacaoPorTemporada);
 
-    }
+        // Estatisticas
+        DoubleSummaryStatistics est = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.summarizingDouble(Episodio::getAvaliacao));
+        System.out.println(est);
+        System.out.println("Média: " + est.getAverage());
+        System.out.println("Menor avaliação: " + est.getMin());
+        System.out.println("Maior avaliação: " + est.getMax());
+        System.out.println("Quantidade de avaliações: " + est.getCount());
 
+    }
 }
