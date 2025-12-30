@@ -122,6 +122,13 @@ public class Main {
 //                                "Episódio: " + e.getTitulo() +
 //                                "Data Lançamento: " + e.getDataLancamento().format(formatador)
 //                ));
+
+        // Agrupamento de dados - usando map
+        Map<Integer, Double> avaliacaoPorTemporada = episodios.stream()
+                .filter(e -> e.getAvaliacao() > 0.0)
+                .collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getAvaliacao)));
+        System.out.println(avaliacaoPorTemporada);
+
     }
 
 }
